@@ -1,24 +1,7 @@
+@import './colorFunctions.scss';
+
 // Color Palette
-$base-color: #7d54a0;
-
-// Keeps a value within a specified range
-@function range($min, $max, $val) {
-  @return max($min, min($max, $val));
-}
-
-@function _darken($color, $degree) {
-  @return darken(
-    $color,
-    range( 0, 100, ($lightness-factor * $degree) - $lightness-shift)
-  );
-}
-
-@function _lighten($color, $degree) {
-  @return lighten(
-    $color,
-    range( 0, 100, ($lightness-factor * $degree) + $lightness-shift)
-  );
-}
+$base-color: lightblue;
 
 // Controls the relative "spread" of lightness and saturation values
 $lightness-factor: 1.1;   // By far the most sensitive to play with
@@ -29,26 +12,11 @@ $lightness-shift: -2.5;
 $saturation-shift: 10;
 
 // Calculate all of our colors
-$darker: saturate(
-  _darken($base-color, 10%),
-  range( 0, 100, ($saturation-factor * 5%) + $saturation-shift )
-);
-$darkest: saturate(
-  _darken($darker, 10%),
-  range( 0, 100, ($saturation-factor * 5%) + $saturation-shift)
-);
-$nearblack: saturate(
-  _darken($darkest, 10%),
-  range( 0, 100, ($saturation-factor * 5%) + $saturation-shift)
-);
-$lighter: desaturate(
-  _lighten($base-color, 30%),
-  range( 0, 100, ($saturation-factor * 20%) - $saturation-shift)
-);
-$lightest: desaturate(
-  _lighten($lighter, 20%),
-  range( 0, 100, ($saturation-factor * 10%) - $saturation-shift)
-);
+$darker: darkShift($base-color, 10%, 5%);
+$darkest: darkShift($darker, 10%, 5%);
+$nearblack: darkShift($darkest, 10%, 5%);
+$lighter: lightShift($base-color, 30%, 20%);
+$lightest: lightShift($lighter, 20%, 10%);
 
 .App {
   display: flex;

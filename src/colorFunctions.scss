@@ -1,0 +1,34 @@
+// Keeps a value within a specified range
+@function range($min, $max, $val) {
+  @return max($min, min($max, $val));
+}
+
+// Creates a darker version of a color by shifting the lightness and saturation
+@function darkShift($color, $lightness, $saturation) {
+  @return saturate(
+    _darken($color, $lightness),
+    range( 0, 100, ($saturation-factor * $saturation) + $saturation-shift )
+  );
+}
+
+// Creates a lighter version of a color by shifting the lightness and saturation
+@function lightShift($color, $lightness, $saturation) {
+  @return desaturate(
+    _lighten($color, $lightness),
+    range( 0, 100, ($saturation-factor * $saturation) - $saturation-shift )
+  );
+}
+
+@function _darken($color, $degree) {
+  @return darken(
+    $color,
+    range( 0, 100, ($lightness-factor * $degree) - $lightness-shift)
+  );
+}
+
+@function _lighten($color, $degree) {
+  @return lighten(
+    $color,
+    range( 0, 100, ($lightness-factor * $degree) + $lightness-shift)
+  );
+}
