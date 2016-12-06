@@ -6,22 +6,16 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          $base-color
         </div>
         <div>
-          $darker
         </div>
         <div>
-          $darkest
         </div>
         <div>
-          $nearblack
         </div>
         <div>
-          $lighter
         </div>
         <div>
-          $lightest
         </div>
       </div>
     );

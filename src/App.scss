@@ -64,31 +64,55 @@ $lightest: desaturate(
   &:nth-child(1) {
     color: $lightest;
     background: $base-color;
+
+    &:after {
+      content: "#{$base-color}";
+    }
   }
 
   &:nth-child(2) {
     color: $lightest;
     background: $darker;
+
+    &:after {
+      content: "#{$darker}";
+    }
   }
 
   &:nth-child(3) {
     color: $lightest;
     background: $darkest;
+
+    &:after {
+      content: "#{$darkest}";
+    }
   }
 
   &:nth-child(4) {
     color: $lightest;
     background: $nearblack;
+
+    &:after {
+      content: "#{$nearblack}";
+    }
   }
 
   &:nth-child(5) {
     color: $nearblack;
     background: $lighter;
+
+    &:after {
+      content: "#{$lighter}";
+    }
   }
 
   &:nth-child(6) {
     color: $nearblack;
     background: $lightest;
+
+    &:after {
+      content: "#{$lightest}";
+    }
   }
 }
 
