@@ -1,15 +1,15 @@
 @import './colorFunctions.scss';
 
 // Color Palette
-$base-color: lightblue;
+$base-color: #d72516;
 
-// Controls the relative "spread" of lightness and saturation values
-$lightness-factor: 1.1;   // By far the most sensitive to play with
-$saturation-factor: 0.2;
+// Controls the color contrast, or relative "spread" of lightness and saturation values
+$lightness-factor: 1;   // By far the most sensitive to play with
+$saturation-factor: 1;
 
 // Controls the absolute shift of lightness and saturation values
-$lightness-shift: -2.5;
-$saturation-shift: 10;
+$lightness-shift: 0;
+$saturation-shift: 0;
 
 // Calculate all of our colors
 $darker: darkShift($base-color, 10%, 5%);
@@ -17,6 +17,8 @@ $darkest: darkShift($darker, 10%, 5%);
 $nearblack: darkShift($darkest, 10%, 5%);
 $lighter: lightShift($base-color, 30%, 20%);
 $lightest: lightShift($lighter, 20%, 10%);
+
+$colors: $base-color, $darker, $darkest, $nearblack, $lighter, $lightest;
 
 .App {
   display: flex;
@@ -29,57 +31,19 @@ $lightest: lightShift($lighter, 20%, 10%);
   font-family: monospace;
   font-size: 2em;
 
-  &:nth-child(1) {
-    color: $lightest;
-    background: $base-color;
+  @each $item in $colors {
+    &:nth-child(#{index($colors, $item)}) {
+      background: $item;
 
-    &:after {
-      content: "#{$base-color}";
-    }
-  }
+      @if lightness($item) > 50% {
+        color: $nearblack;
+      } @else {
+        color: $lightest;
+      }
 
-  &:nth-child(2) {
-    color: $lightest;
-    background: $darker;
-
-    &:after {
-      content: "#{$darker}";
-    }
-  }
-
-  &:nth-child(3) {
-    color: $lightest;
-    background: $darkest;
-
-    &:after {
-      content: "#{$darkest}";
-    }
-  }
-
-  &:nth-child(4) {
-    color: $lightest;
-    background: $nearblack;
-
-    &:after {
-      content: "#{$nearblack}";
-    }
-  }
-
-  &:nth-child(5) {
-    color: $nearblack;
-    background: $lighter;
-
-    &:after {
-      content: "#{$lighter}";
-    }
-  }
-
-  &:nth-child(6) {
-    color: $nearblack;
-    background: $lightest;
-
-    &:after {
-      content: "#{$lightest}";
+      &:after {
+        content: "#{$item}";
+      }
     }
   }
 }
