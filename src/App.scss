@@ -21,15 +21,99 @@ $lightest: lightShift($lighter, 20%, 10%);
 $colors: $base-color, $darker, $darkest, $nearblack, $lighter, $lightest;
 
 .App {
+  height: 100%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  font-size: 1.2em;
+  font-family: monospace;
+
+  h1 {
+    text-align: center;
+  }
+
+  h2 {
+    padding: 1.5em 0 0em 0;
+  }
+
+  input {
+    border-radius: 3px;
+    border: 1px solid #999;
+    font-size: 1em;
+    font-family: monospace;
+    padding: 5px;
+  }
 }
 
-.App > div {
-  padding: 2em;
-  width: 100%;
-  font-family: monospace;
-  font-size: 2em;
+#sidebar {
+  width: 300px;
+  padding: 15px 40px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -7px 0px 20px 0px rgba(0, 0, 0, 0.3);
+}
+
+.base-color {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 0;
+
+  input {
+    width: 160px;
+  }
+}
+
+.slider {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 1.5em 0;
+
+  label {
+    // font-weight: bolder;
+  }
+
+  .control {
+    span {
+      width: 30px;
+      text-align: center;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 220px;
+  }
+
+  input {
+    width: 30px;
+  }
+
+  input[type="range"] {
+    width: 130px;
+    margin: 0 10px;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.colors {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.colors > div {
+  height: 100%;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  padding-left: 1em;
 
   @each $item in $colors {
     &:nth-child(#{index($colors, $item)}) {
