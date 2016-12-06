@@ -1,0 +1,95 @@
+// Color Palette
+$base-color: #7d54a0;
+
+// Keeps a value within a specified range
+@function range($min, $max, $val) {
+  @return max($min, min($max, $val));
+}
+
+@function _darken($color, $degree) {
+  @return darken(
+    $color,
+    range( 0, 100, ($lightness-factor * $degree) - $lightness-shift)
+  );
+}
+
+@function _lighten($color, $degree) {
+  @return lighten(
+    $color,
+    range( 0, 100, ($lightness-factor * $degree) + $lightness-shift)
+  );
+}
+
+// Controls the relative "spread" of lightness and saturation values
+$lightness-factor: 1.1;   // By far the most sensitive to play with
+$saturation-factor: 0.2;
+
+// Controls the absolute shift of lightness and saturation values
+$lightness-shift: -2.5;
+$saturation-shift: 10;
+
+// Calculate all of our colors
+$darker: saturate(
+  _darken($base-color, 10%),
+  range( 0, 100, ($saturation-factor * 5%) + $saturation-shift )
+);
+$darkest: saturate(
+  _darken($darker, 10%),
+  range( 0, 100, ($saturation-factor * 5%) + $saturation-shift)
+);
+$nearblack: saturate(
+  _darken($darkest, 10%),
+  range( 0, 100, ($saturation-factor * 5%) + $saturation-shift)
+);
+$lighter: desaturate(
+  _lighten($base-color, 30%),
+  range( 0, 100, ($saturation-factor * 20%) - $saturation-shift)
+);
+$lightest: desaturate(
+  _lighten($lighter, 20%),
+  range( 0, 100, ($saturation-factor * 10%) - $saturation-shift)
+);
+
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.App > div {
+  padding: 2em;
+  width: 100%;
+  font-family: monospace;
+  font-size: 2em;
+
+  &:nth-child(1) {
+    color: $lightest;
+    background: $base-color;
+  }
+
+  &:nth-child(2) {
+    color: $lightest;
+    background: $darker;
+  }
+
+  &:nth-child(3) {
+    color: $lightest;
+    background: $darkest;
+  }
+
+  &:nth-child(4) {
+    color: $lightest;
+    background: $nearblack;
+  }
+
+  &:nth-child(5) {
+    color: $nearblack;
+    background: $lighter;
+  }
+
+  &:nth-child(6) {
+    color: $nearblack;
+    background: $lightest;
+  }
+}
+
+
