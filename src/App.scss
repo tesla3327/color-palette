@@ -1,25 +1,5 @@
 @import './colorFunctions.scss';
 
-// Color Palette
-$base-color: #d72516;
-
-// Controls the color contrast, or relative "spread" of lightness and saturation values
-$lightness-factor: 1;   // By far the most sensitive to play with
-$saturation-factor: 1;
-
-// Controls the absolute shift of lightness and saturation values
-$lightness-shift: 0;
-$saturation-shift: 0;
-
-// Calculate all of our colors
-$darker: darkShift($base-color, 10%, 5%);
-$darkest: darkShift($darker, 10%, 5%);
-$nearblack: darkShift($darkest, 10%, 5%);
-$lighter: lightShift($base-color, 30%, 20%);
-$lightest: lightShift($lighter, 20%, 10%);
-
-$colors: $base-color, $darker, $darkest, $nearblack, $lighter, $lightest;
-
 .App {
   height: 100%;
   width: 100%;
@@ -85,12 +65,13 @@ $colors: $base-color, $darker, $darkest, $nearblack, $lighter, $lightest;
   }
 
   input {
-    width: 30px;
+    width: 50px;
   }
 
   input[type="range"] {
-    width: 130px;
+    width: 140px;
     margin: 0 10px;
+    padding: 0;
   }
 
   > div {
@@ -106,6 +87,7 @@ $colors: $base-color, $darker, $darkest, $nearblack, $lighter, $lightest;
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
+  color: white;
 }
 
 .colors > div {
@@ -114,22 +96,6 @@ $colors: $base-color, $darker, $darkest, $nearblack, $lighter, $lightest;
   display: flex;
   align-items: center;
   padding-left: 1em;
-
-  @each $item in $colors {
-    &:nth-child(#{index($colors, $item)}) {
-      background: $item;
-
-      @if lightness($item) > 50% {
-        color: $nearblack;
-      } @else {
-        color: $lightest;
-      }
-
-      &:after {
-        content: "#{$item}";
-      }
-    }
-  }
 }
 
 
