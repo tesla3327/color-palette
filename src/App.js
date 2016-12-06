@@ -66,16 +66,29 @@ const lightShift = (color, lightness, saturation) =>
     .hex()
     .toString();
 
-const renderColorPalette = colorPalette => (
+const renderColorPalette = (colorPalette, lightText, darkText) => (
   <div className="colors">
     {
-      colorPalette.map( (e, i) => (
-        <div
-          key={i}
-          style={{ background: e }}>
-          { e }
-        </div>
-      ))
+      colorPalette.map( (e, i) => {
+        const background = Color(e);
+        const lightContrast = background.contrast(Color(lightText));
+        const darkContrast = background.contrast(Color(darkText));
+
+        let color;
+        if (lightContrast > darkContrast) {
+          color = lightText;
+        } else {
+          color = darkText;
+        }
+
+        return (
+          <div
+            key={i}
+            style={{ background: e, color }}>
+            { e }
+          </div>
+        );
+      })
     }
   </div>
 );
@@ -95,9 +108,14 @@ class App extends Component {
         contrast: 1.0,
         shift: 0,
       },
+      lightText: 'white',
+      darkText: 'black',
     };
 
     this.state.palette = this.generateColorPalette();
+    
+    this.state.lightText = this.state.palette[5];
+    this.state.darkText = this.state.palette[3];
   }
 
   shouldRegenerateColorPalette() {
@@ -163,6 +181,9 @@ class App extends Component {
 
     state.palette = this.generateColorPalette(state);
 
+    state.lightText = state.palette[5];
+    state.darkText = state.palette[3];
+
     this.setState(state);
   }
 
@@ -171,18 +192,22 @@ class App extends Component {
     state.baseColor = e.target.value;
 
     state.palette = this.generateColorPalette(state);
+
+    state.lightText = state.palette[5];
+    state.darkText = state.palette[3];
+
     this.setState(state);
   }
 
   render() {
-    const { baseColor, lightness, saturation, palette } = this.state;
+    const { baseColor, lightness, saturation, palette, darkText, lightText } = this.state;
 
     return (
       <div className="App">
         
-        { renderColorPalette( palette ) }
+        { renderColorPalette( palette, lightText, darkText ) }
         
-        <div id="sidebar">
+        <div id="sidebar" style={{ color: darkText }}>
           <h1>Color Palette</h1>
 
           <div className="base-color">
